@@ -141,8 +141,8 @@ SVG;
     public function register(Request $request)
     {
         $request->validate([
-            'nombre'   => ['required', 'string', 'max:50'],
-            'apellido' => ['required', 'string', 'max:50'],
+            'nombre'   => ['required', 'string', 'max:50', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/u'],
+            'apellido' => ['required', 'string', 'max:50', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/u'],
             'cedula'   => ['required', 'string', 'max:8', 'regex:/^[0-9]+$/', 'unique:usuarios'],
             'email'    => ['required', 'string', 'email', 'max:255', 'unique:usuarios'],
             'password' => [
@@ -155,6 +155,8 @@ SVG;
             ],
             'captcha'  => ['required', 'string'],
         ], [
+            'nombre.regex'   => 'El nombre solo puede contener letras y espacios.',
+            'apellido.regex' => 'El apellido solo puede contener letras y espacios.',
             'email.max'      => 'El correo electrónico no puede exceder los 255 caracteres.',
             'password.min'   => 'La contraseña debe tener un mínimo de 8 caracteres.',
             'password.max'   => 'La contraseña no puede exceder los 20 caracteres.',
@@ -171,8 +173,8 @@ SVG;
         session()->forget('captcha_code');
 
         $usuario = Usuario::create([
-            'nombre' => $request->nombre,
-            'apellido' => $request->apellido,
+            'nombre' => trim($request->nombre),
+            'apellido' => trim($request->apellido),
             'cedula' => $request->cedula,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -180,9 +182,48 @@ SVG;
             'activo' => true,
         ]);
 
+        $correoEnviado = false;
+        try {
+            $verifyUrl = \Illuminate\Support\Facades\URL::temporarySignedRoute(
+                'verification.verify.custom',
+                now()->addHours(24),
+                ['id' => $usuario->id, 'hash' => sha1($usuario->email)]
+            );
+            \Illuminate\Support\Facades\Mail::to($usuario->email)->send(new \App\Mail\RegistroVerificacionMail($usuario, $verifyUrl));
+            $correoEnviado = true;
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Error enviando correo de verificación al registrarse: ' . $e->getMessage());
+        }
+
         Auth::login($usuario);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with(
+            $correoEnviado ? 'success' : 'info',
+            $correoEnviado
+                ? '¡Registro exitoso! Te enviamos un correo de verificación a ' . $usuario->email . '.'
+                : '¡Registro exitoso! Tu cuenta fue creada (el servidor de correo no pudo enviar el mensaje en este momento).'
+        );
+    }
+
+    public function verifyEmail(Request $request, $id, $hash)
+    {
+        if (!$request->hasValidSignature()) {
+            return redirect()->route('home')->withErrors(['email' => 'El enlace de verificación no es válido o ha expirado.']);
+        }
+
+        $usuario = Usuario::findOrFail($id);
+        if (!hash_equals((string) $hash, sha1($usuario->email))) {
+            return redirect()->route('home')->withErrors(['email' => 'El enlace de verificación no corresponde a este usuario.']);
+        }
+
+        if (!$usuario->email_verificado_en) {
+            $usuario->email_verificado_en = now();
+            $usuario->save();
+        }
+
+        Auth::login($usuario);
+
+        return redirect()->route('dashboard')->with('success', '¡Tu correo electrónico ha sido verificado correctamente!');
     }
 
     // Cierra la sesión activa del usuario.

@@ -39,11 +39,11 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" value="{{ old('nombre') }}" required maxlength="50">
+                    <input type="text" id="nombre" name="nombre" value="{{ old('nombre') }}" required maxlength="50" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]+" title="Solo se permiten letras y espacios" oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]/g, '')">
                 </div>
                 <div class="form-group">
                     <label for="apellido">Apellido</label>
-                    <input type="text" id="apellido" name="apellido" value="{{ old('apellido') }}" required maxlength="50">
+                    <input type="text" id="apellido" name="apellido" value="{{ old('apellido') }}" required maxlength="50" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]+" title="Solo se permiten letras y espacios" oninput="this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]/g, '')">
                 </div>
             </div>
 

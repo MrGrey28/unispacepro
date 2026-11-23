@@ -410,8 +410,8 @@
                     
                     @if($curso->profesor)
                         <a href="{{ route('profesores', ['profesor' => $curso->profesor->nombreCompleto()]) }}" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.85rem; background: #f8fafc; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 1rem; text-decoration: none; color: inherit;">
-                            @if($curso->profesor->foto_perfil)
-                                <img src="{{ asset('storage/' . $curso->profesor->foto_perfil) }}" alt="{{ $curso->profesor->nombreCompleto() }}" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;">
+                            @if($curso->profesor->fotoPerfilUrl())
+                                <img src="{{ $curso->profesor->fotoPerfilUrl() }}" alt="{{ $curso->profesor->nombreCompleto() }}" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;">
                             @else
                                 <div style="width: 38px; height: 38px; border-radius: 50%; background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem;">
                                     {{ strtoupper(substr($curso->profesor->nombre, 0, 1) . substr($curso->profesor->apellido, 0, 1)) }}
