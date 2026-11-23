@@ -189,7 +189,11 @@ SVG;
                 now()->addHours(24),
                 ['id' => $usuario->id, 'hash' => sha1($usuario->email)]
             );
-            \Illuminate\Support\Facades\Mail::to($usuario->email)->send(new \App\Mail\RegistroVerificacionMail($usuario, $verifyUrl));
+            \App\Services\CorreoService::enviar(
+                $usuario->email,
+                new \App\Mail\RegistroVerificacionMail($usuario, $verifyUrl),
+                $usuario->nombreCompleto()
+            );
             $correoEnviado = true;
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('Error enviando correo de verificación al registrarse: ' . $e->getMessage());
@@ -271,7 +275,11 @@ SVG;
         );
 
         try {
-            \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\ResetPasswordMail($token, $user->email));
+            \App\Services\CorreoService::enviar(
+                $user->email,
+                new \App\Mail\ResetPasswordMail($token, $user->email),
+                $user->nombreCompleto()
+            );
         } catch (\Exception $e) {
             return back()->withErrors(['email' => 'No se pudo enviar el correo de recuperación. Por favor intenta más tarde o verifica la configuración del servidor.']);
         }

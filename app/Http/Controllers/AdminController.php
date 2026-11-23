@@ -34,7 +34,11 @@ class AdminController extends Controller
         $ticket->save();
 
         try {
-            Mail::to($ticket->usuario->email)->send(new ReservaConfirmada($ticket));
+            \App\Services\CorreoService::enviar(
+                $ticket->usuario->email,
+                new ReservaConfirmada($ticket),
+                $ticket->usuario->nombreCompleto()
+            );
         } catch (\Exception $e) {
             Log::error('Error enviando correo tras aprobación admin: ' . $e->getMessage());
         }
@@ -114,7 +118,11 @@ class AdminController extends Controller
         ]);
 
         try {
-            Mail::to($usuario->email)->send(new ReservaConfirmada($ticket));
+            \App\Services\CorreoService::enviar(
+                $usuario->email,
+                new ReservaConfirmada($ticket),
+                $usuario->nombreCompleto()
+            );
         } catch (\Exception $e) {
             Log::error('Error enviando correo en asignación manual: ' . $e->getMessage());
         }

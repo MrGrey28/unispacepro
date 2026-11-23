@@ -136,7 +136,11 @@ class ReservaController extends Controller
         }
 
         try {
-            Mail::to($usuario->email)->send(new ReservaConfirmada($ticket));
+            \App\Services\CorreoService::enviar(
+                $usuario->email,
+                new ReservaConfirmada($ticket),
+                $usuario->nombreCompleto()
+            );
         } catch (\Exception $e) {
             Log::error('Fallo al enviar correo de reserva: ' . $e->getMessage());
         }
