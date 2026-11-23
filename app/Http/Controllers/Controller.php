@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-abstrac class Controller
+abstract class Controller
 {
     //
 }
