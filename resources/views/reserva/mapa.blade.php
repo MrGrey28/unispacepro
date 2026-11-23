@@ -165,66 +165,77 @@
                     <input type="hidden" name="butaca_id" id="butaca_id" value="" required>
 
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: start;">
-                        <!-- Columna 1: Datos de Pago Móvil UMC -->
+                        <!-- Columna 1: Datos de Pago Móvil y Efectivo UMC -->
                         <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1.25rem;">
-                            <h4 style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 1.05rem;">1. Datos para realizar el Pago Móvil</h4>
+                            <h4 style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 1.05rem;">1. Opciones de Pago UMC</h4>
                             <p style="font-size: 0.84rem; color: #475569; margin-bottom: 0.85rem;">
-                                Transfiere el monto exacto a la cuenta oficial de la Universidad Marítima del Caribe:
+                                Puedes cancelar por <strong>Pago Móvil</strong> a la cuenta oficial de la UMC o en <strong>Efectivo</strong> en taquilla:
                             </p>
                             <div style="font-size: 0.88rem; display: flex; flex-direction: column; gap: 0.4rem; background: #ffffff; padding: 0.85rem 1rem; border-radius: 8px; border: 1px solid #e2e8f0;">
                                 <div><strong>Banco:</strong> 0102 - Banco de Venezuela</div>
                                 <div><strong>RIF:</strong> G-20003807-1</div>
-                                <div><strong>Teléfono:</strong> 0412-5550199</div>
+                                <div><strong>Teléfono Pago Móvil:</strong> 0212-3500100</div>
                                 <div><strong>Monto:</strong> ${{ number_format($funcion->curso->precio, 2) }} USD (Tasa BCV)</div>
                             </div>
 
-                            <div style="margin-top: 1rem; padding-top: 0.85rem; border-top: 1px dashed #cbd5e1;">
-                                <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 0.5rem;">
-                                    ¿Prefieres pagar y reportar directamente con el Administrador por el Bot de WhatsApp?
+                            <div style="margin-top: 1rem; padding: 0.85rem 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;">
+                                <strong style="display: block; font-size: 0.85rem; color: #166534; margin-bottom: 0.25rem;">
+                                    Pago en Efectivo y Atención Presencial
+                                </strong>
+                                <p style="font-size: 0.8rem; color: #14532d; margin: 0; line-height: 1.45;">
+                                    Si pagas en <strong>efectivo</strong>, o necesitas terminar de confirmar tu pago o solventar algún inconveniente, debes acudir de manera <strong>presencial</strong> a la Taquilla Administrativa de la UMC.
                                 </p>
-                                <a href="https://wa.me/584125550199?text={{ urlencode('Hola Admin UniSpace, soy ' . Auth::user()->nombreCompleto() . ' (C.I: ' . Auth::user()->cedula . '). Deseo pagar por Pago Móvil una butaca para el evento: ' . $funcion->curso->nombre) }}"
-                                   id="btn-wa-seat"
-                                   target="_blank"
-                                   style="display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 0.6rem 1rem; background: #16a34a; color: #ffffff; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-decoration: none;">
-                                    Reportar Pago Móvil por Bot de WhatsApp
-                                </a>
                             </div>
                         </div>
 
-                        <!-- Columna 2: Formulario de Referencia para Solicitud al Admin -->
+                        <!-- Columna 2: Formulario de Pasarela -->
                         <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1.25rem;">
-                            <h4 style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 1.05rem;">2. Reportar Referencia en Pasarela</h4>
+                            <h4 style="margin: 0 0 0.5rem 0; color: #0f172a; font-size: 1.05rem;">2. Confirmar Método de Pago</h4>
                             <p style="font-size: 0.84rem; color: #475569; margin-bottom: 1rem;">
-                                Al enviar tu referencia, la solicitud pasará al Administrador. Al verificar que concuerda el pago, se te asignará la butaca y recibirás tu correo con código QR y enlace a Google Calendar.
+                                Tu butaca quedará apartada en estado pendiente hasta que el Administrador confirme tu pago (por referencia o presencial en taquilla).
                             </p>
 
                             <div class="form-group" style="margin-bottom: 0.9rem;">
-                                <label for="banco_pago" style="font-size: 0.85rem;">Banco Emisor del Pago Móvil</label>
-                                <select name="banco_pago" id="banco_pago" required style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid #cbd5e1; border-radius: 8px; font-family: var(--font-main); background: #f8fafc;">
-                                    <option value="">Selecciona tu banco...</option>
-                                    <option value="0102 - Banco de Venezuela">0102 - Banco de Venezuela</option>
-                                    <option value="0134 - Banesco">0134 - Banesco</option>
-                                    <option value="0105 - Banco Mercantil">0105 - Banco Mercantil</option>
-                                    <option value="0108 - BBVA Provincial">0108 - BBVA Provincial</option>
-                                    <option value="0191 - BNC">0191 - Banco Nacional de Crédito (BNC)</option>
-                                    <option value="0172 - Bancamiga">0172 - Bancamiga</option>
-                                    <option value="0114 - Bancaribe">0114 - Bancaribe</option>
+                                <label for="metodo_pago" style="font-size: 0.85rem;">Método de Pago</label>
+                                <select name="metodo_pago" id="metodo_pago" required style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid #cbd5e1; border-radius: 8px; font-family: var(--font-main); background: #f8fafc;">
+                                    <option value="pago_movil">Pago Móvil (0212-3500100)</option>
+                                    <option value="efectivo">Efectivo (Taquilla Presencial UMC)</option>
                                 </select>
                             </div>
 
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 1.1rem;">
-                                <div class="form-group" style="margin-bottom: 0;">
-                                    <label for="telefono_pago" style="font-size: 0.85rem;">Teléfono Emisor</label>
-                                    <input type="text" name="telefono_pago" id="telefono_pago" value="{{ Auth::user()->telefono }}" required placeholder="Ej: 04121234567" maxlength="15">
+                            <div id="campos-pago-movil">
+                                <div class="form-group" style="margin-bottom: 0.9rem;">
+                                    <label for="banco_pago" style="font-size: 0.85rem;">Banco Emisor del Pago Móvil</label>
+                                    <select name="banco_pago" id="banco_pago" required style="width: 100%; padding: 0.7rem 0.9rem; border: 1px solid #cbd5e1; border-radius: 8px; font-family: var(--font-main); background: #f8fafc;">
+                                        <option value="">Selecciona tu banco...</option>
+                                        <option value="0102 - Banco de Venezuela">0102 - Banco de Venezuela</option>
+                                        <option value="0134 - Banesco">0134 - Banesco</option>
+                                        <option value="0105 - Banco Mercantil">0105 - Banco Mercantil</option>
+                                        <option value="0108 - BBVA Provincial">0108 - BBVA Provincial</option>
+                                        <option value="0191 - BNC">0191 - Banco Nacional de Crédito (BNC)</option>
+                                        <option value="0172 - Bancamiga">0172 - Bancamiga</option>
+                                        <option value="0114 - Bancaribe">0114 - Bancaribe</option>
+                                    </select>
                                 </div>
-                                <div class="form-group" style="margin-bottom: 0;">
-                                    <label for="referencia_pago" style="font-size: 0.85rem;">Número de Referencia</label>
-                                    <input type="text" name="referencia_pago" id="referencia_pago" required placeholder="Últimos 6 u 8 dígitos" maxlength="30">
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 1.1rem;">
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label for="telefono_pago" style="font-size: 0.85rem;">Teléfono Emisor</label>
+                                        <input type="text" name="telefono_pago" id="telefono_pago" value="{{ Auth::user()->telefono }}" required placeholder="Ej: 04121234567" maxlength="15">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label for="referencia_pago" style="font-size: 0.85rem;">Número de Referencia</label>
+                                        <input type="text" name="referencia_pago" id="referencia_pago" required placeholder="Últimos 6 u 8 dígitos" maxlength="30">
+                                    </div>
                                 </div>
                             </div>
 
+                            <div id="aviso-efectivo" style="display: none; background: #fffbeb; border: 1px solid #fde68a; color: #92400e; border-radius: 8px; padding: 0.85rem 1rem; font-size: 0.83rem; margin-bottom: 1.1rem; line-height: 1.45;">
+                                <strong>Reserva en Efectivo:</strong> Al enviar la solicitud, tu butaca quedará apartada. Preséntate en la Taquilla Administrativa UMC para cancelar <strong>${{ number_format($funcion->curso->precio, 2) }} USD</strong> en efectivo y terminar de confirmar tu pago.
+                            </div>
+
                             <button type="submit" class="btn btn-primary btn-block" id="btn-reservar" disabled style="padding: 0.85rem;">
-                                Enviar Solicitud y Referencia al Administrador
+                                Enviar Solicitud de Reserva
                             </button>
                         </div>
                     </div>
@@ -251,19 +262,26 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const butacas = document.querySelectorAll('.butaca-disponible');
-        const waBtn = document.getElementById('btn-wa-seat');
-        const baseWaText = @json('Hola Admin UniSpace, soy ' . Auth::user()->nombreCompleto() . ' (C.I: ' . Auth::user()->cedula . '). Deseo reportar mi Pago Móvil para el evento "' . $funcion->curso->nombre . '"');
+        const metodoSelect = document.getElementById('metodo_pago');
+        const camposPm = document.getElementById('campos-pago-movil');
+        const avisoEfectivo = document.getElementById('aviso-efectivo');
+        const banco = document.getElementById('banco_pago');
+        const telefono = document.getElementById('telefono_pago');
+        const referencia = document.getElementById('referencia_pago');
 
-        butacas.forEach(b => {
-            b.addEventListener('click', function() {
-                const etq = this.getAttribute('data-etiqueta');
-                if (waBtn && etq) {
-                    const msg = `${baseWaText} en la Butaca ${etq}. Mi número de referencia es: `;
-                    waBtn.href = `https://wa.me/584125550199?text=${encodeURIComponent(msg)}`;
-                }
-            });
-        });
+        function toggleMetodoPago() {
+            const esEfectivo = metodoSelect && metodoSelect.value === 'efectivo';
+            if (camposPm) camposPm.style.display = esEfectivo ? 'none' : 'block';
+            if (avisoEfectivo) avisoEfectivo.style.display = esEfectivo ? 'block' : 'none';
+            if (banco) banco.required = !esEfectivo;
+            if (telefono) telefono.required = !esEfectivo;
+            if (referencia) referencia.required = !esEfectivo;
+        }
+
+        if (metodoSelect) {
+            metodoSelect.addEventListener('change', toggleMetodoPago);
+            toggleMetodoPago();
+        }
     });
 </script>
 @endpush

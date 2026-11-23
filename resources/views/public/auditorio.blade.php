@@ -223,11 +223,11 @@
             @endif
         </div>
 
-        <!-- Tarjeta de Datos de Pago Móvil y Bot de WhatsApp -->
+        <!-- Tarjeta de Datos de Pago Móvil y Efectivo Presencial -->
         <div class="pago-movil-card">
-            <h3>Taquilla de Pago Móvil UMC</h3>
+            <h3>Taquilla de Pagos UMC</h3>
             <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 0.5rem;">
-                Para reservar una butaca en los eventos del Auditorio, realiza el Pago Móvil a los siguientes datos oficiales:
+                Para reservar una butaca en los eventos del Auditorio, puedes cancelar por <strong>Pago Móvil</strong> o en <strong>Efectivo</strong>:
             </p>
 
             <div class="pm-data-list">
@@ -241,7 +241,7 @@
                 </div>
                 <div class="pm-data-row">
                     <span style="color: #64748b;">Teléfono Pago Móvil:</span>
-                    <strong>0412-5550199</strong>
+                    <strong>0212-3500100</strong>
                 </div>
                 <div class="pm-data-row">
                     <span style="color: #64748b;">Concepto:</span>
@@ -249,13 +249,16 @@
                 </div>
             </div>
 
-            <p style="font-size: 0.8rem; color: #475569; margin-bottom: 0.9rem;">
-                Puedes seleccionar tu asiento abajo y enviar el <strong>Número de Referencia</strong> para aprobación del Administrador, o reportar tu pago vía <strong>Bot de WhatsApp</strong> para asignación directa:
-            </p>
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 0.85rem;">
+                <strong style="display: block; color: #166534; font-size: 0.86rem; margin-bottom: 0.25rem;">Pago en Efectivo (Taquilla Presencial)</strong>
+                <p style="font-size: 0.8rem; color: #14532d; margin: 0; line-height: 1.45;">
+                    También aceptamos pagos en efectivo directamente en la <strong>Taquilla Administrativa del campus UMC</strong>.
+                </p>
+            </div>
 
-            <a href="https://wa.me/584125550199?text={{ urlencode('Hola Administrador UniSpace, deseo consultar/reportar un Pago Móvil para reservar una butaca en el Auditorio Principal UMC.') }}" target="_blank" class="btn-whatsapp-taquilla">
-                Contactar Bot / Taquilla por WhatsApp
-            </a>
+            <p style="font-size: 0.8rem; color: #475569; margin: 0; line-height: 1.45;">
+                Selecciona tu asiento abajo para reportar tu referencia de <strong>Pago Móvil</strong> o solicitar tu reserva en <strong>Efectivo</strong>. Para terminar de confirmar tu pago o solventar cualquier problema, acude de manera <strong>presencial</strong> a taquilla.
+            </p>
         </div>
     </div>
 </section>
@@ -265,7 +268,7 @@
     <div class="container">
         <h2 class="section-title">Eventos y Graduaciones Programadas</h2>
         <p class="section-subtitle" style="margin-bottom: 2rem;">
-            Selecciona tu evento, elige tu butaca en el plano de 96 asientos del Auditorio y registra tu referencia de Pago Móvil.
+            Selecciona tu evento, elige tu butaca en el plano de 96 asientos del Auditorio y registra tu pago por Pago Móvil o en Efectivo.
         </p>
 
         <!-- Explicación del flujo en 3 pasos -->
@@ -277,13 +280,13 @@
             </div>
             <div class="step-box">
                 <span class="step-num">2</span>
-                <h4 style="margin-bottom: 0.3rem; font-size: 1rem;">Reporta tu Pago Móvil</h4>
-                <p style="font-size: 0.85rem; color: #64748b; margin: 0;">Ingresa el número de referencia en la pasarela o envíalo por el Bot de WhatsApp al Administrador.</p>
+                <h4 style="margin-bottom: 0.3rem; font-size: 1rem;">Pago Móvil o Efectivo</h4>
+                <p style="font-size: 0.85rem; color: #64748b; margin: 0;">Reporta tu referencia de Pago Móvil en la pasarela o elige pago en Efectivo y confirma presencialmente en taquilla.</p>
             </div>
             <div class="step-box">
                 <span class="step-num">3</span>
                 <h4 style="margin-bottom: 0.3rem; font-size: 1rem;">Verificación, Correo QR y Agenda</h4>
-                <p style="font-size: 0.85rem; color: #64748b; margin: 0;">Al confirmar el Administrador tu referencia, recibes el correo con tu QR y el botón para agendar en Google Calendar.</p>
+                <p style="font-size: 0.85rem; color: #64748b; margin: 0;">Al confirmar el Administrador tu pago (o en taquilla presencial), recibes tu ticket con QR y el botón para agendar en Google Calendar.</p>
             </div>
         </div>
 

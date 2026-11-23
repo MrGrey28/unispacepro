@@ -53,13 +53,13 @@ class ChatbotController extends Controller
             ]);
         }
 
-        // 3. Auditorio / eventos / pagos / pago móvil / whatsapp
-        if ($this->contieneAlguno($texto, ['auditorio', 'evento', 'pago', 'pagar', 'pago movil', 'whatsapp', 'graduacion', 'congreso', 'simposio', 'qr'])) {
+        // 3. Auditorio / eventos / pagos / pago móvil / efectivo
+        if ($this->contieneAlguno($texto, ['auditorio', 'evento', 'pago', 'pagar', 'pago movil', 'efectivo', 'taquilla', 'presencial', 'graduacion', 'congreso', 'simposio', 'qr'])) {
             $eventos = Curso::where('tipo', 'evento')->where('activo', true)->get(['nombre', 'precio']);
             $lista = $eventos->map(fn ($e) => "• {$e->nombre} ($" . number_format((float) $e->precio, 2) . " USD)")->implode("\n");
 
             return response()->json([
-                'respuesta' => "En «Auditorio y Eventos» puedes reservar butacas (A1 a H12) para eventos especiales:\n" . ($lista ?: "• Consulta la sección Auditorio y Eventos.") . "\n\nPuedes reportar tu Pago Móvil desde la pasarela web o por el botón de WhatsApp. Cuando el Administrador apruebe el pago, recibirás tu ticket con QR.",
+                'respuesta' => "En «Auditorio y Eventos» puedes reservar butacas (A1 a H12) para eventos especiales:\n" . ($lista ?: "• Consulta la sección Auditorio y Eventos.") . "\n\nPuedes pagar por Pago Móvil (0212-3500100) o en Efectivo. Para terminar de confirmar tu pago o solventar cualquier inconveniente, debes acudir de manera presencial a la taquilla administrativa de la UMC.",
                 'sugerencias' => ['¿Cómo reservo un cupo?', '¿Dónde veo mis tickets?'],
             ]);
         }

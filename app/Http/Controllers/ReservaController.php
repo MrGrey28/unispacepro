@@ -61,10 +61,14 @@ class ReservaController extends Controller
         ];
 
         $esEventoPago = $funcion->curso->esEvento();
+        $metodoPago = $request->input('metodo_pago', 'pago_movil');
         if ($esEventoPago) {
-            $rules['banco_pago']      = 'required|string|max:80';
-            $rules['telefono_pago']   = 'required|string|max:30';
-            $rules['referencia_pago'] = 'required|string|min:4|max:100';
+            $rules['metodo_pago'] = 'nullable|in:pago_movil,efectivo';
+            if ($metodoPago !== 'efectivo') {
+                $rules['banco_pago']      = 'required|string|max:80';
+                $rules['telefono_pago']   = 'required|string|max:30';
+                $rules['referencia_pago'] = 'required|string|min:4|max:100';
+            }
         }
 
         $request->validate($rules);
@@ -96,6 +100,17 @@ class ReservaController extends Controller
             $funcion->hora_inicio
         );
 
+        $esEfectivo = $esEventoPago && $metodoPago === 'efectivo';
+        $referenciaFinal = $esEventoPago
+            ? ($esEfectivo ? 'EFECTIVO-' . strtoupper(substr(uniqid(), -6)) : $request->referencia_pago)
+            : null;
+        $telefonoFinal = $esEventoPago
+            ? ($esEfectivo ? 'Taquilla Presencial' : $request->telefono_pago)
+            : null;
+        $bancoFinal = $esEventoPago
+            ? ($esEfectivo ? 'Efectivo (Taquilla Presencial UMC)' : $request->banco_pago)
+            : null;
+
         try {
             $ticket = Ticket::create([
                 'usuario_id'      => $usuario->id,
@@ -103,9 +118,9 @@ class ReservaController extends Controller
                 'butaca_id'       => $butaca->id,
                 'codigo_ticket'   => $codigoTicket,
                 'estado'          => $esEventoPago ? 'pendiente' : 'activo',
-                'referencia_pago' => $esEventoPago ? $request->referencia_pago : null,
-                'telefono_pago'   => $esEventoPago ? $request->telefono_pago : null,
-                'banco_pago'      => $esEventoPago ? $request->banco_pago : null,
+                'referencia_pago' => $referenciaFinal,
+                'telefono_pago'   => $telefonoFinal,
+                'banco_pago'      => $bancoFinal,
                 'monto_pagado'    => $esEventoPago ? $funcion->curso->precio : 0,
             ]);
         } catch (\Illuminate\Database\QueryException $e) {
@@ -113,10 +128,11 @@ class ReservaController extends Controller
         }
 
         if ($esEventoPago) {
-            return redirect()->route('dashboard')->with(
-                'success',
-                'Solicitud enviada al Administrador (Butaca ' . $butaca->etiqueta . ' | Referencia Pago Móvil: ' . $request->referencia_pago . '). Una vez verificado tu pago, se activará tu ticket con QR y recibirás el correo de confirmación.'
-            );
+            $mensajeEvento = $esEfectivo
+                ? 'Solicitud en Efectivo enviada (Butaca ' . $butaca->etiqueta . ' | Código: ' . $referenciaFinal . '). Acude presencialmente a la Taquilla Administrativa UMC para cancelar y confirmar tu pago.'
+                : 'Solicitud enviada al Administrador (Butaca ' . $butaca->etiqueta . ' | Referencia Pago Móvil: ' . $referenciaFinal . '). Una vez verificado tu pago (o confirmado en taquilla presencial), se activará tu ticket con QR.';
+
+            return redirect()->route('dashboard')->with('success', $mensajeEvento);
         }
 
         try {

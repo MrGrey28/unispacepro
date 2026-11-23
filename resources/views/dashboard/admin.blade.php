@@ -175,12 +175,12 @@
                 @endif
             </div>
 
-            <!-- SECCION B: ASIGNACION MANUAL DE BUTACA (FLUJO WHATSAPP BOT / TAQUILLA) -->
+            <!-- SECCION B: ASIGNACION MANUAL DE BUTACA (TAQUILLA PRESENCIAL / EFECTIVO) -->
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
                 <div style="margin-bottom: 1.25rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 1rem;">
-                    <span style="display: inline-block; background: #dcfce7; color: #166534; font-size: 0.72rem; font-weight: 800; padding: 0.2rem 0.65rem; border-radius: 50px; text-transform: uppercase; margin-bottom: 0.35rem;">Flujo Chatbot WhatsApp / Taquilla</span>
+                    <span style="display: inline-block; background: #dcfce7; color: #166534; font-size: 0.72rem; font-weight: 800; padding: 0.2rem 0.65rem; border-radius: 50px; text-transform: uppercase; margin-bottom: 0.35rem;">Taquilla Presencial / Efectivo</span>
                     <h3 style="margin: 0; color: #1d3557; font-size: 1.25rem;">Asignar Butaca de Auditorio Manualmente</h3>
-                    <p style="margin: 0.25rem 0 0 0; font-size: 0.88rem; color: #64748b;">Cuando un estudiante reporta su Pago Movil por el Chatbot de WhatsApp, selecciona aqui al estudiante, el evento y la butaca. El sistema creara el ticket activo inmediatamente, lo mostrara en su perfil con opcion de calendario y le enviara el correo automatizado con su codigo QR.</p>
+                    <p style="margin: 0.25rem 0 0 0; font-size: 0.88rem; color: #64748b;">Cuando un estudiante pague en efectivo o confirme su Pago Movil presencialmente en taquilla, selecciona aqui al estudiante, el evento y la butaca. El sistema creara el ticket activo inmediatamente, lo mostrara en su perfil con opcion de calendario y le enviara el correo automatizado con su codigo QR.</p>
                 </div>
 
                 <form action="{{ route('admin.auditorio.asignar') }}" method="POST">
@@ -216,13 +216,13 @@
                         </div>
 
                         <div>
-                            <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 0.35rem;">4. Referencia Pago Movil / WhatsApp</label>
-                            <input type="text" name="referencia_pago" placeholder="Ej: WA-98451230" required style="width: 100%; padding: 0.65rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem;">
+                            <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 0.35rem;">4. Referencia Pago Movil / Recibo Efectivo</label>
+                            <input type="text" name="referencia_pago" placeholder="Ej: 123456 o EFECTIVO-001" required style="width: 100%; padding: 0.65rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem;">
                         </div>
 
                         <div>
-                            <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 0.35rem;">5. Banco Origen</label>
-                            <input type="text" name="banco_pago" value="Pago Movil WhatsApp" style="width: 100%; padding: 0.65rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem;">
+                            <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #334155; margin-bottom: 0.35rem;">5. Metodo / Banco Origen</label>
+                            <input type="text" name="banco_pago" value="Taquilla Presencial (Efectivo / Pago Movil)" style="width: 100%; padding: 0.65rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem;">
                         </div>
 
                         <div>

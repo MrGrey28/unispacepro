@@ -108,8 +108,8 @@ class AdminController extends Controller
             'codigo_ticket'   => $codigoTicket,
             'estado'          => 'activo',
             'referencia_pago' => $request->referencia_pago,
-            'telefono_pago'   => $request->telefono_pago ?: 'WhatsApp Bot',
-            'banco_pago'      => 'Asignación Manual / WhatsApp',
+            'telefono_pago'   => $request->telefono_pago ?: 'Taquilla Presencial',
+            'banco_pago'      => 'Asignación Manual / Taquilla Presencial',
             'monto_pagado'    => $funcion->curso->precio ?? 0,
         ]);
 
