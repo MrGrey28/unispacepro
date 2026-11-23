@@ -26,6 +26,11 @@ return [
         'key' => env('BREVO_API_KEY'),
     ],
 
+    'gmail_webhook' => [
+        'url'    => env('GMAIL_WEBHOOK_URL'),
+        'secret' => env('GMAIL_WEBHOOK_SECRET'),
+    ],
+
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),

@@ -9,18 +9,38 @@ use Illuminate\Support\Facades\Mail;
 class CorreoService
 {
     /**
-     * Envía un Mailable usando Brevo API (HTTPS puerto 443) si BREVO_API_KEY está configurada,
-     * o mediante el mailer SMTP estándar de Laravel en entornos locales.
+     * Envía un Mailable usando:
+     * 1) Google Apps Script Web App (HTTPS 443, 100% gratis con Gmail) si GMAIL_WEBHOOK_URL está configurado.
+     * 2) Brevo API (HTTPS 443) si BREVO_API_KEY está configurado.
+     * 3) SMTP estándar de Laravel en entornos locales.
      */
     public static function enviar(string $destinatario, Mailable $mailable, ?string $nombreDestinatario = null): void
     {
-        $brevoKey = config('services.brevo.key');
+        $gmailWebhookUrl = config('services.gmail_webhook.url');
+        if (!empty($gmailWebhookUrl)) {
+            $html = $mailable->render();
+            $asunto = $mailable->envelope()->subject ?? config('app.name', 'UniSpacePro');
 
+            $response = Http::timeout(15)->post($gmailWebhookUrl, [
+                'secret'  => config('services.gmail_webhook.secret', ''),
+                'to'      => $destinatario,
+                'subject' => $asunto,
+                'html'    => $html,
+            ]);
+
+            if ($response->failed()) {
+                throw new \RuntimeException('Gmail Webhook error (' . $response->status() . '): ' . $response->body());
+            }
+
+            return;
+        }
+
+        $brevoKey = config('services.brevo.key');
         if (!empty($brevoKey)) {
             $html = $mailable->render();
             $asunto = $mailable->envelope()->subject ?? config('app.name', 'UniSpacePro');
 
-            $fromAddress = config('mail.from.address', 'greymelmoreno@gmail.com');
+            $fromAddress = config('mail.from.address', 'unispace41@gmail.com');
             $fromName = config('mail.from.name', 'UniSpacePro');
 
             $toItem = ['email' => $destinatario];

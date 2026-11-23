@@ -53,10 +53,10 @@ PASO 3: DESPLEGAR LARAVEL EN RENDER (GRATIS)
    MAIL_MAILER=smtp
    MAIL_HOST=smtp.gmail.com
    MAIL_PORT=465
-   MAIL_USERNAME=greymelmoreno@gmail.com
+   MAIL_USERNAME=unispace41@gmail.com
    MAIL_PASSWORD=TU_APP_PASSWORD_DE_GMAIL
    MAIL_ENCRYPTION=ssl
-   MAIL_FROM_ADDRESS=greymelmoreno@gmail.com
+   MAIL_FROM_ADDRESS=unispace41@gmail.com
    MAIL_FROM_NAME=UnispacePro
 
 6. En "Health Check Path" coloca: /up
