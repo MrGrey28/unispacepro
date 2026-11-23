@@ -13,7 +13,7 @@ class Curso extends Model
         'salon_id',
         'nombre',
         'codigo',
-        'dscripcion',
+        'descripcion',
         'foto',
         'tipo',
         'fecha_inicio',
