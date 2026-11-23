@@ -13,7 +13,7 @@ use App\Models\Usuario;
 use App\Models\Ticket;
 use App\Models\Funcion;
 use App\Models\Butaca;
-use App\Mail\ReservaConfirmaa;
+use App\Mail\ReservaConfirmada;
 
 class AdminController extends Controller
 {
